@@ -23,17 +23,51 @@ describe("enhance unit test", () => {
       const enhancedItem = succeed(item);
       expect(enhancedItem.enhancement).toBe(mockItem + 1);
     });
-  });
-  describe("success", () => {
-    it("Enhances level by 1", () => {
-      let mockItem = 19;
+    it("keeps enhancement lvl at 20", () => {
+      let mockItem = 20;
       let item = {
         name: "Computer",
         durability: 20,
         enhancement: mockItem,
       };
       const enhancedItem = succeed(item);
-      expect(enhancedItem.enhancement).toBe(mockItem + 1);
+      expect(enhancedItem.enhancement).toBe(20);
+    });
+  });
+  describe("fails", () => {
+    it("Enhancement lvl <15", () => {
+      let mockDurability = 10;
+      let mockEnhance = 12;
+      let item = {
+        name: "Computer Screen",
+        durability: mockDurability,
+        enhancement: mockEnhance,
+      };
+      const enhanceFailure = fail(item);
+      expect(enhanceFailure.durability).toBe(mockDurability - 5);
+    });
+    it("Enhancement lvl >15", () => {
+      let mockDurability = 10;
+      let mockEnhance = 15;
+      let item = {
+        name: "Computer",
+        durability: mockDurability,
+        enhancement: mockEnhance,
+      };
+      const enhanceFailure = fail(item);
+      expect(enhanceFailure.durability).toBe(mockDurability - 10);
+    });
+    it("Enhancement lvl >16", () => {
+      let mockDurability = 10;
+      let mockEnhance = 17;
+      let item = {
+        name: "Computer",
+        durability: mockDurability,
+        enhancement: mockEnhance,
+      };
+      const enhanceFailure = fail(item);
+      expect(enhanceFailure.durability).toBe(mockDurability - 10);
+      expect(enhanceFailure.enhancement).toBe(mockEnhance - 1);
     });
   });
 });
